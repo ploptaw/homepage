@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{{ title }}</title>
+    <meta name="description" content="{{ description or 'blog' }}" />
+    <meta name="keywords" content="minecraft, pixel-art, blog" />
+    <meta name="theme-color" content="#e0e5ec" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/icon-192x192.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="/style.min.css" />
+
+    <meta property="og:title" content="{{ title }}" />
+    <meta property="og:description" content="{{ description or 'blog' }}" />
+    <meta
+      property="og:image"
+      content="https://ploptaw-blog.netlify.app/icon-192x192.png"
+    />
+    <meta property="og:url" content="{{ page.url | url }}" />
+    <meta property="og:type" content="article" />
+  </head>
+  <body>
+    <header class="home-header">
+      <nav class="nav-links">
+        <div>
+          <a href="/" class="nav-link">home</a>
+          <a href="/content/list" class="nav-link">list</a>
+          <a href="/content/gallery" class="nav-link">gallery</a>
+          <a href="https://github.com/ploptaw" class="nav-link">source</a>
+        </div>
+      </nav>
+    </header>
+    {{ content | safe }}
+  </body>
+</html>

@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Black Trump",
+    "alt": "黒のトランプ",
+    "image_path": "images/black_trump.webp"
+  },
+  {
+    "title": "Black Club",
+    "alt": "黒のクラブ",
+    "image_path": "images/black_club.webp"
+  },
+  {
+    "title": "black Diamond",
+    "alt": "黒のダイヤ",
+    "image_path": "images/black_diamond.webp"
+  },
+  {
+    "title": "black Heart",
+    "alt": "黒のハート",
+    "image_path": "images/black_heart.webp"
+  },
+  {
+    "title": "black Spade",
+    "alt": "黒のスペード",
+    "image_path": "images/black_spade.webp"
+  },
+  {
+    "title": "Red Trump",
+    "alt": "赤のトランプ",
+    "image_path": "images/red_trump.webp"
+  },
+  {
+    "title": "Red Diamond",
+    "alt": "赤のダイヤ",
+    "image_path": "images/red_diamond.webp"
+  },
+  {
+    "title": "Red Heart",
+    "alt": "赤のハート",
+    "image_path": "images/red_heart.webp"
+  },
+  {
+    "title": "Red Spade",
+    "alt": "赤のスペード",
+    "image_path": "images/red_spade.webp"
+  },
+  {
+    "title": "Red Club",
+    "alt": "赤のクラブ",
+    "image_path": "images/red_club.webp"
+  }
+]

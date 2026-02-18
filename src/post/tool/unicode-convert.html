@@ -1,0 +1,42 @@
+---
+title: Unicode変換ツール
+description: 変換／逆変換
+layout: "tool"
+---
+
+<div class="convert-container">
+  <h2>変換</h2>
+  <textarea
+    id="input-text"
+    rows="4"
+    class="input"
+    placeholder="ここに入力"
+  ></textarea>
+  <button class="convert-button">変換する</button>
+  <span class="mob-hide">　Enterで変換　Shift+Enterで改行</span>
+  <div id="output" class="result"></div>
+
+  <h2>逆変換</h2>
+  <textarea
+    id="input-unicode"
+    rows="4"
+    class="input"
+    placeholder="ここに入力"
+  ></textarea>
+  <button class="reverse-button">逆変換する</button>
+  <span class="mob-hide">　Enterで変換　Shift+Enterで改行</span>
+  <div id="output-unicode" class="result"></div>
+
+  <h2>§ to & Converter</h2>
+  <textarea
+    id="section-text"
+    rows="4"
+    class="input"
+    placeholder="ここに入力"
+  ></textarea>
+  <button class="convert-andbutton">変換する</button>
+  <span class="mob-hide">　Enterで変換　Shift+Enterで改行</span>
+  <div id="result" class="result"></div>
+
+  <script src="/js/unicode-convert.min.js"></script>
+</div>

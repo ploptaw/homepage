@@ -1,0 +1,33 @@
+{
+  "name": "homepage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "minify": "npx terser src/js/lottery.js -o src/js/lottery.min.js --compress --mangle && npx terser src/js/unicode-convert.js -o src/js/unicode-convert.min.js --compress --mangle",
+    "build": "npm run minify && npx @11ty/eleventy",
+    "dev": "npx @11ty/eleventy --serve",
+    "debug": "DEBUG=Eleventy* npx @11ty/eleventy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ploptaw/homepage.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ploptaw/homepage/issues"
+  },
+  "homepage": "https://github.com/ploptaw/homepage#readme",
+  "dependencies": {
+    "@11ty/eleventy": "^3.1.2",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
+    "@codestitchofficial/eleventy-plugin-minify": "^1.1.3",
+    "lightningcss": "^1.31.1"
+  },
+  "devDependencies": {
+    "terser": "^5.46.0"
+  }
+}
