@@ -1,0 +1,35 @@
+---
+title: MC NBT Parser
+description: MinecraftのNBTからアイテム名・説明文を抽出
+layout: "tool"
+---
+
+<div>
+  <textarea
+    id="nbt-input"
+    rows="5"
+    class="input"
+    placeholder="ここにNBTを貼り付け"
+  ></textarea>
+
+  <button
+    id="parseButton"
+    class="button btn-center"
+  >
+    抽出する
+  </button>
+
+  <div id="output-wrap">
+    <div class="output-col">
+      <p class="output-label">プレーンテキスト</p>
+      <pre id="output-plain" class="result output-pre"></pre>
+    </div>
+    <div class="output-col">
+      <p class="output-label">nbt.display 形式</p>
+      <pre id="output-nbt" class="result output-pre"></pre>
+    </div>
+  </div>
+  <p id="output-error" class="error-msg"></p>
+</div>
+
+<script src="/js/mc-nbt-parser.min.js" defer></script>

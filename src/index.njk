@@ -17,7 +17,7 @@ title: Home
   </div>
 
   <section class="posts-section">
-    <h2 class="section-heading">▹Article</h2>
+    <h2 class="section-heading">Article</h2>
     <div class="posts-grid">
       {%- for article in collections.articles | reverse -%} {%- if loop.index <=
       4 -%}
@@ -42,7 +42,7 @@ title: Home
   </section>
 
   <section class="tools-section">
-    <h2 class="section-heading">▹Tool</h2>
+    <h2 class="section-heading">Tool</h2>
     <div class="posts-grid">
       {%- for tool in collections.tools | reverse -%} {%- if loop.index <= 4 -%}
       <card class="post-card dot-icon tool-icon neumorphic">
