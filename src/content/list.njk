@@ -5,21 +5,18 @@ title: All Post
 
 <main>
   <h1>Article</h1>
-  <ul>
+  <ul class="post-list">
     {%- set previousDate = "" -%} {%- for article in collections.articles -%}
     <li class="post-item">
-        <!-- タイトル -->
-        <a href="{{ article.url }}">{{ article.data.title }}</a>
+      <!-- タイトル -->
+      <a href="{{ article.url }}">{{ article.data.title }}</a>
 
-        <!-- 日付 -->
-        {%- if previousDate != (article.date | dateMIN ) -%}
-        <span class="post-date" style="font-size: 0.8em; color: #848fa0">
-          {{ article.date | dateMIN }}
-        </span>
-        {%- set previousDate = article.date | dateMIN -%} {%- else -%}
-        <span class="post-separator"> </span>
-        {%- endif -%}
-      </div>
+      <!-- 日付 -->
+      {%- if previousDate != (article.date | dateMIN ) -%}
+      <span class="post-date">{{ article.date | dateMIN }}</span>
+      {%- set previousDate = article.date | dateMIN -%} {%- else -%}
+      <span class="post-separator"> </span>
+      {%- endif -%}
     </li>
     {%- endfor -%}
   </ul>
@@ -28,11 +25,9 @@ title: All Post
   <!-- タグ一覧セクション -->
   <section class="all-tags">
     <h1>Tag</h1>
-    <ul class="tags" style="display: flex; flex-wrap: wrap; padding: 1rem">
+    <ul class="tags">
       {%- for tag in collections.tags | sort -%}
-      <li style="margin-right: 1rem; list-style: none">
-        <a href="/tags/{{ tag | slug }}">{{ tag }}</a>
-      </li>
+      <li><a href="/tags/{{ tag | slug }}">{{ tag }}</a></li>
       {%- endfor -%}
     </ul>
   </section>

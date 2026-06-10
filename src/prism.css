@@ -1,0 +1,49 @@
+pre[class*="language-"] {
+  background: #2d2d2d;
+  color: #ccc;
+  font-family: Consolas, Monaco, monospace;
+  padding: 1.25em;
+  overflow-x: auto;
+  border-radius: 0.75rem;
+  tab-size: 4;
+  line-height: 1.65;
+}
+
+.token.comment {
+  color: #999;
+  font-style: italic;
+}
+.token.keyword,
+.token.selector,
+.token.atrule {
+  color: #cc99cd;
+}
+.token.string,
+.token.attr-value {
+  color: #7ec699;
+}
+.token.number,
+.token.boolean,
+.token.function {
+  color: #f08d49;
+}
+.token.tag,
+.token.attr-name,
+.token.deleted {
+  color: #e2777a;
+}
+.token.class-name,
+.token.constant {
+  color: #f8c555;
+}
+.token.operator,
+.token.entity {
+  color: #67cdcc;
+}
+
+/* 記事内コードブロックのサイズ調整 */
+.prose pre[class*="language-"] {
+  margin: 1.5em 0;
+  font-size: 0.9em;
+  line-height: 1.6;
+}

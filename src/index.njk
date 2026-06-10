@@ -10,20 +10,19 @@ title: Home
       This blog is a collection of my tools, articles, and notes.
       <a
         href="/content/about"
-        style="color: #2400b3; text-decoration: underline"
+        class="link-accent"
         >Read more →</a
       >
     </p>
   </div>
-  <br />
 
   <section class="posts-section">
-    <h2 style="font-size: 2rem">▹Article</h2>
+    <h2 class="section-heading">▹Article</h2>
     <div class="posts-grid">
       {%- for article in collections.articles | reverse -%} {%- if loop.index <=
       4 -%}
       <card
-        class="post-card dot-icon 
+        class="post-card dot-icon
               {{ 'note-icon' if article.data.tags[0] === 'note' else 'post-icon' }}
               neumorphic"
       >
@@ -38,18 +37,12 @@ title: Home
     <a
       class="more"
       href="/content/list"
-      style="
-        color: #2400b3;
-        display: flex;
-        padding: 1rem 0 0 1rem;
-        font-size: 1.2em;
-      "
       >more →</a
     >
   </section>
 
   <section class="tools-section">
-    <h2 style="font-size: 2rem">▹Tool</h2>
+    <h2 class="section-heading">▹Tool</h2>
     <div class="posts-grid">
       {%- for tool in collections.tools | reverse -%} {%- if loop.index <= 4 -%}
       <card class="post-card dot-icon tool-icon neumorphic">

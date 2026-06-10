@@ -18,17 +18,19 @@ function setupHandlers() {
   setupButtonHandlers([
     {
       buttonClass: ".convert-button",
-      handler: () => updateOutput(outputDiv, escapeText(inputText.value), true),
+      handler: () => updateOutput(outputDiv, inputText.value, escapeText),
     },
     {
       buttonClass: ".reverse-button",
       handler: () =>
-        updateOutput(outputUnicodeDiv, unescapeText(inputUnicode.value), true),
+        updateOutput(outputUnicodeDiv, inputUnicode.value, unescapeText),
     },
     {
       buttonClass: ".convert-andbutton",
       handler: () =>
-        updateOutput(resultDiv, sectionText.value.replace(/§/g, "&"), true),
+        updateOutput(resultDiv, sectionText.value, (text) =>
+          text.replace(/§/g, "&")
+        ),
     },
   ]);
 }
@@ -36,10 +38,11 @@ function setupHandlers() {
 // Enter キーのハンドラ
 function setupEnterHandlers(handlers) {
   handlers.forEach(({ textarea, buttonClass }) => {
+    const button = document.querySelector(buttonClass);
     textarea.addEventListener("keydown", (e) => {
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
-        document.querySelector(buttonClass).click();
+        button.click();
       }
     });
   });
@@ -53,13 +56,14 @@ function setupButtonHandlers(handlers) {
 }
 
 // 出力欄
-function updateOutput(container, text, enableCopy = false) {
-  // 文字数制限のチェック
-  if (text.length > 2000) {
+function updateOutput(container, input, convert) {
+  // 変換前の入力に対して文字数制限をチェック
+  if (input.length > 2000) {
     container.textContent = "エラー: 変換できる文字数は2000文字までです。";
     return;
   }
 
+  const text = convert(input);
   container.textContent = "";
 
   const textarea = document.createElement("textarea");
@@ -68,13 +72,11 @@ function updateOutput(container, text, enableCopy = false) {
   container.appendChild(textarea);
 
   // コピー機能
-  if (enableCopy) {
-    const copyBtn = createButton("コピー", () =>
-      navigator.clipboard.writeText(text)
-    );
-    copyBtn.classList.add("button");
-    container.appendChild(copyBtn);
-  }
+  const copyBtn = createButton("コピー", () =>
+    navigator.clipboard.writeText(text)
+  );
+  copyBtn.classList.add("button");
+  container.appendChild(copyBtn);
 
   // クリア機能
   const clearBtn = createButton("クリア", () => (container.textContent = ""));
