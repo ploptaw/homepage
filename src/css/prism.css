@@ -1,16 +1,17 @@
 pre[class*="language-"] {
-  background: #2d2d2d;
-  color: #ccc;
-  font-family: Consolas, Monaco, monospace;
-  padding: 1.25em;
+  background: var(--surface);
+  color: #d4d4d8;
+  font-family: var(--font-mono);
+  padding: 1em 1.25em;
   overflow-x: auto;
-  border-radius: 0.75rem;
+  border: 1px solid var(--sub);
+  border-radius: var(--radius);
   tab-size: 4;
   line-height: 1.65;
 }
 
 .token.comment {
-  color: #999;
+  color: var(--muted);
   font-style: italic;
 }
 .token.keyword,

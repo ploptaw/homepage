@@ -2,34 +2,41 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <title>{{ title }}</title>
-    <meta name="description" content="{{ description or 'blog' }}" />
-<meta name="theme-color" content="#e0e5ec" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ title }}{% if title != "Home" %} | {{ site.name }}{% endif %}</title>
+    {%- set desc = description or site.description %}
+    {%- set absUrl = site.url + page.url %}
+    <meta name="description" content="{{ desc }}" />
+    <meta name="theme-color" content="{{ site.themeColor }}" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="canonical" href="{{ absUrl }}" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="apple-touch-icon" href="/icon-192x192.png" />
-    <link rel="stylesheet" href="/style.min.css" />
+    <style>
+      {%- css "base" %}
+      {%- if layout == "tool" %}{% css "tool" %}{% endif %}
+      {%- if "language-" in content %}{% css "prism" %}{% endif -%}
+    </style>
 
     <meta property="og:title" content="{{ title }}" />
-    <meta property="og:description" content="{{ description or 'blog' }}" />
-    <meta
-      property="og:image"
-      content="https://puta-blog.pages.dev/icon-192x192.png"
-    />
-    <meta property="og:url" content="{{ page.url | url }}" />
-    <meta property="og:type" content="website" />
+    <meta property="og:description" content="{{ desc }}" />
+    <meta property="og:image" content="{{ site.url }}/icon-192x192.png" />
+    <meta property="og:url" content="{{ absUrl }}" />
+    <meta property="og:type" content="{{ 'article' if date and layout == 'post' else 'website' }}" />
   </head>
   <body>
-    <header class="home-header">
-      <nav class="nav-links">
-        <div>
-          <a href="/" class="nav-link">home</a>
-          <a href="/content/list" class="nav-link">list</a>
-          <a href="/content/gallery" class="nav-link">gallery</a>
-          <a href="https://github.com/ploptaw" class="nav-link">source</a>
-        </div>
+    <header class="site-header">
+      <nav class="site-nav">
+        {%- set nav = [["home", "/"], ["list", "/content/list/"], ["gallery", "/content/gallery/"], ["about", "/content/about/"]] -%}
+        {%- for item in nav %}
+        <a href="{{ item[1] }}"{% if page.url == item[1] %} aria-current="page"{% endif %}>{{ item[0] }}</a>
+        {%- endfor %}
+        <a href="https://github.com/ploptaw">source ↗</a>
       </nav>
     </header>
-    {{ content | safe }}
+    <main>
+      {{ content | safe }}
+    </main>
+    <footer class="site-footer">© {{ site.name }}</footer>
   </body>
 </html>

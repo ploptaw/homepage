@@ -1,0 +1,10 @@
+<ul class="entries">
+  {%- for article in articles %}
+  {%- set kind = "note" if "note" in article.data.tags else "post" %}
+  <li>
+    <time datetime="{{ article.date | dateISO }}">{{ article.date | dateDot }}</time>
+    <a class="title" href="{{ article.url }}">{{ article.data.title }}</a>
+    <span class="kind tag-{{ kind }}">{{ kind }}</span>
+  </li>
+  {%- endfor %}
+</ul>

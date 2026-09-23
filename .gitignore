@@ -8,6 +8,9 @@ yarn-error.log*
 .env
 .env.local
 .env.*.local
+.agents
+.claude
+skills-lock.json
 
 # IDEやエディタ固有のファイル
 .vscode/
@@ -23,10 +26,6 @@ yarn-error.log*
 .cache/
 docs/
 *.tmp
-
-# ビルド生成物
-src/js/*.min.js
-src/public/style.min.css
 
 # OS固有のファイル
 .DS_Store

@@ -3,31 +3,29 @@ layout: base
 title: Gallery
 ---
 
-<main>
-  <h1>{{ title }}</h1>
-  <div class="gallery-grid">
-    {%- for image in collections.gallery -%}
-    <div class="gallery-card">
-      <img
-        src="/{{ image.image_path }}"
-        alt="Image of {{ image.title }}"
-        class="pixel-art"
-        loading="{{ 'eager' if loop.first else 'lazy' }}"
-        fetchpriority="{{ 'high' if loop.first else 'auto' }}"
-        decoding="async"
-        width="150"
-        height="150"
-      />
-      <p class="gallery-title">{{ image.title }}</p>
-    </div>
-    {%- endfor -%}
-  </div>
-  <p class="license-note">
-    Images licensed under
-    <a
-      href="https://creativecommons.org/licenses/by-nc-nd/4.0/"
-      rel="license noopener noreferrer"
-      >CC BY-NC-ND 4.0</a
-    >
-  </p>
-</main>
+<h1>{{ title }}</h1>
+<ul class="gallery-grid">
+  {%- for image in gallery %}
+  <li>
+    <img
+      src="/{{ image.image_path }}"
+      alt="{{ image.alt or image.title }}"
+      loading="{{ 'eager' if loop.first else 'lazy' }}"
+      fetchpriority="{{ 'high' if loop.first else 'auto' }}"
+      decoding="async"
+      width="150"
+      height="150"
+    />
+    {{ image.title }}
+  </li>
+  {%- endfor %}
+</ul>
+<p class="license-note">
+  Images licensed under
+  <a
+    class="link"
+    href="https://creativecommons.org/licenses/by-nc-nd/4.0/"
+    rel="license noopener noreferrer"
+    >CC BY-NC-ND 4.0</a
+  >
+</p>

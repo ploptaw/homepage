@@ -1,5 +1,6 @@
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const lightningcss = require("lightningcss");
+const { minify } = require("terser");
 const fs = require("fs");
 
 const LCSS_TARGETS = {
@@ -9,26 +10,42 @@ const LCSS_TARGETS = {
   edge: 80 << 16,
 };
 
+// src/css/*.css と src/js/*.js を圧縮してメモリに保持し、
+// ショートコードで各ページに必要な分だけインライン展開する（追加リクエスト 0）
+const assets = { css: {}, js: {} };
+const sources = (dir, ext) =>
+  fs
+    .readdirSync(dir)
+    .filter((f) => f.endsWith(ext))
+    .map((f) => [f.slice(0, -ext.length), `${dir}/${f}`]);
+
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("./src/images/*.webp");
   eleventyConfig.addPassthroughCopy({ "./src/public": "/" });
-  eleventyConfig.addPassthroughCopy("./src/js/*.min.js");
 
-  // CSS ビルド（lightningcss: nesting transpile + minify）
-  // prism.css は style.min.css に連結して1リクエストにまとめる
-  eleventyConfig.on("eleventy.before", () => {
-    const { code } = lightningcss.transform({
-      filename: "style.css",
-      code: Buffer.concat([
-        fs.readFileSync("./src/style.css"),
-        fs.readFileSync("./src/prism.css"),
-      ]),
-      minify: true,
-      sourceMap: false,
-      targets: LCSS_TARGETS,
-    });
-    fs.writeFileSync("./src/public/style.min.css", code);
+  eleventyConfig.on("eleventy.before", async () => {
+    // CSS: lightningcss（nesting transpile + minify）
+    for (const [name, file] of sources("./src/css", ".css")) {
+      assets.css[name] = lightningcss
+        .transform({
+          filename: file,
+          code: fs.readFileSync(file),
+          minify: true,
+          targets: LCSS_TARGETS,
+        })
+        .code.toString();
+    }
+    // JS: terser
+    for (const [name, file] of sources("./src/js", ".js")) {
+      ({ code: assets.js[name] } = await minify(fs.readFileSync(file, "utf8")));
+    }
   });
+
+  // {% css "base", "tool" %} / {% js "lottery" %}
+  eleventyConfig.addShortcode("css", (...names) =>
+    names.map((n) => assets.css[n]).join(""),
+  );
+  eleventyConfig.addShortcode("js", (name) => assets.js[name]);
 
   // HTML minify（<pre>/<script>/<style> 内は保護）
   eleventyConfig.addTransform("htmlmin", (content, outputPath) => {
@@ -46,46 +63,25 @@ module.exports = function (eleventyConfig) {
     return out.replace(/\x00(\d+)\x00/g, (_, i) => preserved[+i]);
   });
 
-  // CSS の変更で自動リビルド
-  eleventyConfig.addWatchTarget("./src/style.css");
-  eleventyConfig.addWatchTarget("./src/prism.css");
+  // CSS / JS の変更で自動リビルド
+  eleventyConfig.addWatchTarget("./src/css/");
+  eleventyConfig.addWatchTarget("./src/js/");
 
-  // シンタックスハイライト（@11ty公式 / Prism.js ベース）
-  // 例: https://unpkg.com/prismjs@1.29.0/themes/prism-tomorrow.min.css
+  // シンタックスハイライト（@11ty公式 / Prism.js ベース、配色は src/css/prism.css）
   eleventyConfig.addPlugin(syntaxHighlight);
 
-  // ギャラリー（JSONから直接読み込み）
-  eleventyConfig.addCollection("gallery", () =>
-    require("./src/content/gallery_list/list.json"),
-  );
-
-  // 記事
+  // 記事・ツール（layout は各ディレクトリの *.11tydata.json で指定）
   eleventyConfig.addCollection("articles", (collectionApi) =>
-    collectionApi.getFilteredByGlob("src/post/article/**/*.md").map((item) => {
-      item.data.permalink = `post/articles/${item.fileSlug}/index.html`;
-      return item;
-    }),
+    collectionApi.getFilteredByGlob("src/post/article/*.md"),
   );
-
-  // ツール
   eleventyConfig.addCollection("tools", (collectionApi) =>
-    collectionApi.getFilteredByGlob("src/post/tool/**/*.html").map((item) => {
-      item.data.permalink = `post/tool/${item.fileSlug}/index.html`;
-      return item;
-    }),
+    collectionApi.getFilteredByGlob("src/post/tool/*.html"),
   );
 
   // タグ一覧
-  eleventyConfig.addCollection("tags", (collectionApi) => {
-    const tagSet = new Set();
-    collectionApi.getAll().forEach((item) => {
-      const tags = item.data.tags;
-      if (Array.isArray(tags)) {
-        tags.forEach((tag) => tagSet.add(tag));
-      }
-    });
-    return [...tagSet];
-  });
+  eleventyConfig.addCollection("tags", (collectionApi) => [
+    ...new Set(collectionApi.getAll().flatMap((item) => item.data.tags ?? [])),
+  ]);
 
   // 日本語フル表示: 2025年2月19日
   eleventyConfig.addFilter(
@@ -94,11 +90,19 @@ module.exports = function (eleventyConfig) {
       `${target.getFullYear()}年${target.getMonth() + 1}月${target.getDate()}日`,
   );
 
-  // 年月のみ表示: 2025年2月
+  // ドット区切り: 2025.02.19
+  const pad = (n) => String(n).padStart(2, "0");
   eleventyConfig.addFilter(
-    "dateMIN",
-    (target) => `${target.getFullYear()}年${target.getMonth() + 1}月`,
+    "dateDot",
+    (target) =>
+      `${target.getFullYear()}.${pad(target.getMonth() + 1)}.${pad(target.getDate())}`,
   );
+
+  // datetime 属性用: 2025-02-19
+  eleventyConfig.addFilter("dateISO", (target) =>
+    target.toISOString().slice(0, 10),
+  );
+
 
   return {
     dir: {

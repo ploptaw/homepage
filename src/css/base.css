@@ -1,0 +1,387 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  color-scheme: dark;
+  --bg: #111214;
+  --surface: #1a1b1f;
+  --line: #2a2c31;
+  --text: #e4e4e7;
+  --muted: #8d8f97;
+  /* 緑系3色: 緑（主）/ ミント（副）/ 黄緑（第3） */
+  --accent: #5ccf7c;
+  --sub: #45d6b5;
+  --lime: #b5d45a;
+  /* タグ用パレット（未割り当ての色は新しい頻出タグ用） */
+  --purple: #b392f0;
+  --yellow: #e5c07b;
+  --error: #f28b82;
+  --radius: 4px;
+  --font-sans:
+    system-ui, -apple-system, "Segoe UI", "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Consolas, Menlo, monospace;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+/* 基本の文字サイズ: 16px → 17px（rem 指定の要素もまとめて拡大） */
+html {
+  font-size: 106.25%;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+body {
+  max-width: 44rem;
+  margin-inline: auto;
+  padding: 0 16px 3rem;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  line-height: 1.8;
+  -webkit-text-size-adjust: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+h1 {
+  font-size: 1.6rem;
+  line-height: 1.4;
+  margin: 2.5rem 0 1rem;
+
+  /* 見出し下のアクセントバー */
+  &::after {
+    content: "";
+    display: block;
+    width: 2rem;
+    height: 3px;
+    margin-top: 0.6rem;
+    background: var(--accent);
+  }
+}
+
+h2 {
+  font-size: 1.15rem;
+  line-height: 1.5;
+  margin: 2.5rem 0 0.75rem;
+}
+
+h3 {
+  font-size: 1rem;
+  margin: 1.5rem 0 0.25rem;
+}
+
+ul,
+ol {
+  padding-left: 1.2rem;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+table {
+  border-collapse: collapse;
+
+  & th,
+  & td {
+    border: 1px solid var(--line);
+    padding: 0.4rem 0.75rem;
+  }
+}
+
+/* ヘッダー / フッター */
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  padding: 1.5rem 0 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  font-size: 0.9rem;
+  font-family: var(--font-mono);
+  color: var(--muted);
+
+  & a[aria-current="page"] {
+    color: var(--text);
+    text-decoration: underline 2px var(--accent);
+    text-underline-offset: 0.35em;
+  }
+}
+
+.site-footer {
+  margin-top: 4rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  color: var(--muted);
+}
+
+.lead {
+  margin: 2.5rem 0 1rem;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* 本文中のリンクは色だけに頼らず下線で区別する（a11y） */
+.link,
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+
+  &:hover {
+    text-decoration-thickness: 2px;
+  }
+}
+
+/* 一覧（記事・ツール・タグ共通） */
+.section-title {
+  display: flex;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  &::before {
+    content: "▸";
+    margin-right: 0.5em;
+    color: var(--sub);
+  }
+
+  & a {
+    margin-left: auto;
+    letter-spacing: 0;
+    text-transform: none;
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--muted);
+  }
+}
+
+.entries {
+  list-style: none;
+  padding: 0;
+  border-top: 1px solid var(--line);
+
+  & li {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  & time,
+  & .desc {
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  & .title {
+    flex: 1;
+    min-width: 0;
+  }
+
+  @media (max-width: 560px) {
+    & li {
+      flex-wrap: wrap;
+      gap: 0 1rem;
+    }
+
+    & .desc {
+      flex-basis: 100%;
+      order: 3;
+    }
+  }
+}
+
+.kind {
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--c, var(--muted));
+}
+
+/* 頻出タグの色（.kind / .tags a 共通） */
+.tag-post {
+  --c: var(--accent);
+}
+
+.tag-note {
+  --c: var(--sub);
+}
+
+.tag-minecraft {
+  --c: var(--lime);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+
+  & a {
+    display: inline-block;
+    padding: 0.1rem 0.6rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--c, var(--muted));
+
+    &::before {
+      content: "#";
+    }
+
+    &:hover {
+      border-color: var(--c, var(--accent));
+    }
+  }
+}
+
+/* ギャラリー */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+
+  & li {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--muted);
+    content-visibility: auto;
+    contain-intrinsic-size: 0 190px;
+  }
+
+  & img {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 0.4rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    image-rendering: pixelated;
+  }
+}
+
+.license-note {
+  margin-top: 2rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* 記事 */
+.post-header {
+  margin-bottom: 2rem;
+
+  & h1 {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.prose {
+  line-height: 1.9;
+
+  & p {
+    margin-top: 1em;
+  }
+
+  & h2 {
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid var(--line);
+
+    &::before {
+      content: "#";
+      margin-right: 0.4em;
+      font-family: var(--font-mono);
+      color: var(--sub);
+    }
+  }
+
+  & h3 {
+    margin-top: 2em;
+  }
+
+  & ul,
+  & ol {
+    margin-top: 0.5em;
+    line-height: 1.75;
+  }
+
+  & table {
+    width: 100%;
+    margin-top: 1em;
+  }
+
+  & :not(pre) > code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    padding: 0.1em 0.4em;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    word-break: break-all;
+  }
+}
+
+/* 色見本（文字色ではなく背景色で示し、コントラスト不足を避ける） */
+.swatch {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: 0.5em;
+  vertical-align: -0.15em;
+  border: 1px solid var(--muted);
+  border-radius: 2px;
+}

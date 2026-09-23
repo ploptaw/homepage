@@ -2,11 +2,21 @@
 layout: base
 ---
 
-<main class="prose">
-  <h1>{{ title }}</h1>
-  <time datetime="{{ date }}">{{ date | dateJP }}</time>
-  {% if tags %}<span class="tags">{{ tags | join(', ') }}</span
-  >{% endif %}
-  <hr class="span" />
-  {{ content | safe }}
-</main>
+<article>
+  <header class="post-header">
+    <h1>{{ title }}</h1>
+    <div class="post-meta">
+      <time datetime="{{ date | dateISO }}">{{ date | dateJP }}</time>
+      {%- if tags %}
+      <ul class="tags">
+        {%- for tag in tags %}
+        <li><a class="tag-{{ tag | slug }}" href="/tags/{{ tag | slug }}/">{{ tag }}</a></li>
+        {%- endfor %}
+      </ul>
+      {%- endif %}
+    </div>
+  </header>
+  <div class="prose">
+    {{ content | safe }}
+  </div>
+</article>

@@ -1,7 +1,6 @@
 ---
 title: CITのpropatiesメモ
 date: 2026-03-07
-layout: "post"
 tags: [note, minecraft]
 ---
 

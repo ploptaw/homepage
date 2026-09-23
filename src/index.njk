@@ -3,57 +3,25 @@ layout: base
 title: Home
 ---
 
-<main>
-  <h1>Welcome to my blog</h1>
-  <div>
-    <p>
-      This blog is a collection of my tools, articles, and notes.
-      <a
-        href="/content/about"
-        class="link-accent"
-        >Read more →</a
-      >
-    </p>
-  </div>
+<p class="lead">
+  ツール・記事・メモを置いています。
+  <a href="/content/about/" class="link">about →</a>
+</p>
 
-  <section class="posts-section">
-    <h2 class="section-heading">Article</h2>
-    <div class="posts-grid">
-      {%- for article in collections.articles | reverse -%} {%- if loop.index <=
-      4 -%}
-      <card
-        class="post-card dot-icon
-              {{ 'note-icon' if article.data.tags[0] === 'note' else 'post-icon' }}
-              neumorphic"
-      >
-        <h3>
-          <a href="{{ article.url }}">{{ article.data.title }}</a>
-        </h3>
-        <time datetime="{{ article.date }}">{{ article.date | dateJP }}</time>
-      </card>
-      {%- endif -%} {%- endfor -%}
-    </div>
+<section>
+  <h2 class="section-title">Articles <a href="/content/list/">all →</a></h2>
+  {%- set articles = (collections.articles | reverse).slice(0, 5) %}
+  {%- include "entries.njk" %}
+</section>
 
-    <a
-      class="more"
-      href="/content/list"
-      >more →</a
-    >
-  </section>
-
-  <section class="tools-section">
-    <h2 class="section-heading">Tool</h2>
-    <div class="posts-grid">
-      {%- for tool in collections.tools | reverse -%} {%- if loop.index <= 4 -%}
-      <card class="post-card dot-icon tool-icon neumorphic">
-        <h3>
-          <a href="{{ tool.url }}">{{ tool.data.title }}</a>
-        </h3>
-        <p href="{{ description }}" class="no-decoration">
-          {{ tool.data.description }}
-        </p>
-      </card>
-      {%- endif -%} {%- endfor -%}
-    </div>
-  </section>
-</main>
+<section>
+  <h2 class="section-title">Tools</h2>
+  <ul class="entries">
+    {%- for tool in collections.tools | reverse %}
+    <li>
+      <a class="title" href="{{ tool.url }}">{{ tool.data.title }}</a>
+      <span class="desc">{{ tool.data.description }}</span>
+    </li>
+    {%- endfor %}
+  </ul>
+</section>

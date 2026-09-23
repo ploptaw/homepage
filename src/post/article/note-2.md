@@ -1,7 +1,6 @@
 ---
 title: MOD更新
 date: 2025-03-20
-layout: "post"
 tags: [note, minecraft]
 ---
 

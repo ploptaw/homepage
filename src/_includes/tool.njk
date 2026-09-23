@@ -2,9 +2,12 @@
 layout: base
 ---
 
-<main>
-  <article>
+<article>
+  <header class="post-header">
     <h1>{{ title }}</h1>
-    {{ content | safe }}
-  </article>
-</main>
+    {%- if description %}
+    <p class="muted">{{ description }}</p>
+    {%- endif %}
+  </header>
+  {{ content | safe }}
+</article>

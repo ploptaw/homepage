@@ -1,7 +1,6 @@
 ---
 title: MC NBT Parser
 description: MinecraftのNBTからアイテム名・説明文を抽出
-layout: "tool"
 ---
 
 <div>
@@ -14,7 +13,7 @@ layout: "tool"
 
   <button
     id="parseButton"
-    class="button btn-center"
+    class="btn-center"
   >
     抽出する
   </button>
@@ -29,7 +28,7 @@ layout: "tool"
       <pre id="output-nbt" class="result output-pre"></pre>
     </div>
   </div>
-  <p id="output-error" class="error-msg"></p>
+  <p id="output-error" class="error-msg" hidden></p>
 </div>
 
-<script src="/js/mc-nbt-parser.min.js" defer></script>
+<script>{% js "mc-nbt-parser" %}</script>

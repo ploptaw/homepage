@@ -5,16 +5,11 @@ pagination:
   size: 1
   alias: tag
 permalink: /tags/{{ tag | slug }}/
+eleventyComputed:
+  title: "Tag: {{ tag }}"
 ---
 
-<main>
-  <h1>Tag: {{ tag }}</h1>
-  <ul>
-    {%- for post in collections[tag] -%}
-    <li class="post-item">
-      <a href="{{ post.url }}">{{ post.data.title }}</a>
-    </li>
-    {%- endfor -%}
-  </ul>
-  <hr class="span" />
-</main>
+<h1>Tag: {{ tag }}</h1>
+{%- set articles = collections[tag] | reverse %}
+{%- include "entries.njk" %}
+<p><a href="/content/list/" class="link">← all articles</a></p>

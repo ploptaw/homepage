@@ -8,12 +8,12 @@ function handleParse() {
 
   if (!result) {
     wrap.classList.remove("visible");
-    errorEl.style.display = "block";
+    errorEl.hidden = false;
     errorEl.textContent = "display セクションが見つかりませんでした。";
     return;
   }
 
-  errorEl.style.display = "none";
+  errorEl.hidden = true;
   wrap.classList.add("visible");
 
   const plainLines = [];

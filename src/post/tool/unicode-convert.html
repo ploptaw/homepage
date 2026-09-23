@@ -1,42 +1,20 @@
 ---
 title: Unicode変換ツール
 description: 変換／逆変換
-layout: "tool"
+converters:
+  - { mode: escape, heading: 変換, button: 変換する }
+  - { mode: unescape, heading: 逆変換, button: 逆変換する }
+  - { mode: section, heading: § to & Converter, button: 変換する }
 ---
 
-<div class="convert-container">
-  <h2>変換</h2>
-  <textarea
-    id="input-text"
-    rows="4"
-    class="input"
-    placeholder="ここに入力"
-  ></textarea>
-  <button class="convert-button">変換する</button>
-  <span class="mob-hide">　Enterで変換　Shift+Enterで改行</span>
-  <div id="output" class="result"></div>
+{%- for c in converters %}
+<section class="converter" data-mode="{{ c.mode }}">
+  <h2>{{ c.heading }}</h2>
+  <textarea rows="4" class="input" placeholder="ここに入力" aria-label="{{ c.heading }}の入力"></textarea>
+  <button type="button" class="run">{{ c.button }}</button>
+  <span class="hint">Enter で変換 / Shift+Enter で改行</span>
+  <div class="result" aria-live="polite"></div>
+</section>
+{%- endfor %}
 
-  <h2>逆変換</h2>
-  <textarea
-    id="input-unicode"
-    rows="4"
-    class="input"
-    placeholder="ここに入力"
-  ></textarea>
-  <button class="reverse-button">逆変換する</button>
-  <span class="mob-hide">　Enterで変換　Shift+Enterで改行</span>
-  <div id="output-unicode" class="result"></div>
-
-  <h2>§ to & Converter</h2>
-  <textarea
-    id="section-text"
-    rows="4"
-    class="input"
-    placeholder="ここに入力"
-  ></textarea>
-  <button class="convert-andbutton">変換する</button>
-  <span class="mob-hide">　Enterで変換　Shift+Enterで改行</span>
-  <div id="result" class="result"></div>
-
-  <script src="/js/unicode-convert.min.js" defer></script>
-</div>
+<script>{% js "unicode-convert" %}</script>

@@ -48,6 +48,6 @@ function drawWithDup(N, X) {
 
 function displayMessage(message, isError = false) {
   const resultDiv = document.getElementById("result");
-  resultDiv.innerText = message;
-  resultDiv.style.color = isError ? "red" : "";
+  resultDiv.textContent = message;
+  resultDiv.classList.toggle("is-error", isError);
 }
