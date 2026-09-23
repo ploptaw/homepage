@@ -4,7 +4,7 @@ pre[class*="language-"] {
   font-family: var(--font-mono);
   padding: 1em 1.25em;
   overflow-x: auto;
-  border: 1px solid var(--sub);
+  border: 1px solid var(--accent);
   border-radius: var(--radius);
   tab-size: 4;
   line-height: 1.65;
