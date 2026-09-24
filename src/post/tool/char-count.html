@@ -1,0 +1,72 @@
+---
+title: 文字数カウント
+description: 文字数・行数・バイト数をリアルタイムに集計／テキスト整形
+stats:
+  - { key: chars, label: 文字数 }
+  - { key: noSpace, label: 空白・改行除く }
+  - { key: lines, label: 行数 }
+  - { key: bytes, label: バイト数 (UTF-8) }
+formatOptions:
+  - name: punct
+    label: 句読点
+    choices:
+      - { value: "", label: そのまま }
+      - { value: "、。", label: 、。 }
+      - { value: "，．", label: ，． }
+      - { value: "，。", label: ，。 }
+  - name: alnum
+    label: 英数字
+    choices:
+      - { value: "", label: そのまま }
+      - { value: half, label: 半角に }
+      - { value: full, label: 全角に }
+---
+
+<div>
+  <textarea
+    id="count-input"
+    rows="10"
+    class="input"
+    placeholder="ここに入力"
+    aria-label="カウントするテキスト"
+  ></textarea>
+  <button type="button" id="clearButton">クリア</button>
+
+  <dl class="count-stats" aria-live="polite">
+    {%- for s in stats %}
+    <div class="count-stat">
+      <dt>{{ s.label }}</dt>
+      <dd data-stat="{{ s.key }}">0</dd>
+    </div>
+    {%- endfor %}
+  </dl>
+
+  <section class="format-panel" aria-labelledby="format-heading">
+    <h2 id="format-heading" class="format-heading">整形</h2>
+    {%- for opt in formatOptions %}
+    <fieldset class="format-row">
+      <legend>{{ opt.label }}</legend>
+      <div class="chips">
+        {%- for c in opt.choices %}
+        <label class="chip">
+          <input type="radio" name="{{ opt.name }}" value="{{ c.value }}"
+            {%- if loop.first %} checked{% endif %} />
+          <span>{{ c.label }}</span>
+        </label>
+        {%- endfor %}
+      </div>
+    </fieldset>
+    {%- endfor %}
+    <div class="format-row format-actions">
+      <button type="button" id="formatButton" class="format-run">整形する</button>
+      <div class="chips">
+        <button type="button" id="undoButton" disabled>元に戻す</button>
+        <span id="format-result" class="muted" aria-live="polite"></span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  {% js "char-count" %}
+</script>
