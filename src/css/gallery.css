@@ -1,0 +1,33 @@
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+
+  & li {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--muted);
+    content-visibility: auto;
+    contain-intrinsic-size: 0 190px;
+  }
+
+  & img {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 0.4rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    image-rendering: pixelated;
+  }
+}
+
+.license-note {
+  margin-top: 2rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+

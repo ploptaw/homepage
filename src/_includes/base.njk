@@ -14,7 +14,8 @@
     <link rel="apple-touch-icon" href="/icon-192x192.png" />
     <style>
       {%- css "base" %}
-      {%- if layout == "tool" %}{% css "tool" %}{% endif %}
+      {%- if layout in ["post", "tool"] %}{% css layout %}{% endif %}
+      {%- if styles %}{% css styles %}{% endif %}
       {%- if "language-" in content %}{% css "prism" %}{% endif -%}
     </style>
 
@@ -37,6 +38,5 @@
     <main>
       {{ content | safe }}
     </main>
-    <footer class="site-footer">© {{ site.name }}</footer>
   </body>
 </html>

@@ -1,5 +1,6 @@
 ---
 layout: base
+styles: post
 title: About
 ---
 

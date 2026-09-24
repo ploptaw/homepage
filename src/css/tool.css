@@ -127,3 +127,7 @@ button {
 .error-msg {
   color: var(--error);
 }
+
+.muted {
+  color: var(--muted);
+}

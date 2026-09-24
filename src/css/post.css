@@ -1,0 +1,65 @@
+/* 記事本文（post レイアウト / about で読み込み） */
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.prose {
+  line-height: 1.9;
+
+  & p {
+    margin-top: 1em;
+  }
+
+  & h2 {
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid var(--line);
+
+    &::before {
+      content: "#";
+      margin-right: 0.4em;
+      font-family: var(--font-mono);
+      color: var(--sub);
+    }
+  }
+
+  & h3 {
+    margin-top: 2em;
+  }
+
+  & ul,
+  & ol {
+    margin-top: 0.5em;
+    line-height: 1.75;
+  }
+
+  & table {
+    width: 100%;
+    margin-top: 1em;
+  }
+
+  & :not(pre) > code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    padding: 0.1em 0.4em;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    word-break: break-all;
+  }
+}
+
+/* 色見本（文字色ではなく背景色で示し、コントラスト不足を避ける） */
+.swatch {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: 0.5em;
+  vertical-align: -0.15em;
+  border: 1px solid var(--muted);
+  border-radius: 2px;
+}

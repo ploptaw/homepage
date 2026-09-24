@@ -19,6 +19,7 @@ title: Home
   <ul class="entries">
     {%- for tool in collections.tools | reverse %}
     <li>
+      <span class="kind tag-tool" aria-hidden="true"></span>
       <a class="title" href="{{ tool.url }}">{{ tool.data.title }}</a>
       <span class="desc">{{ tool.data.description }}</span>
     </li>
