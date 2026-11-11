@@ -17,7 +17,7 @@
   /* 主: blue / 副: cyan、残りはタグ・ツールのマーカー用 */
   --accent: #79b0e8;
   --sub: #6fc3cf;
-  --violet: #a9a2e8;
+  --green: #93c48b;
   --yellow: #d6c17f;
   --error: #ec8a8a;
   --radius: 4px;
@@ -65,8 +65,7 @@ a:hover {
   border-radius: 2px;
 }
 
-h1,
-.section-title {
+h1 {
   font-size: 1.6rem;
   line-height: 1.4;
   margin: 2.5rem 0 1rem;
@@ -134,10 +133,6 @@ table {
   }
 }
 
-.lead {
-  margin: 2.5rem 0 1rem;
-}
-
 /* 本文中のリンクは色だけに頼らず下線で区別する（a11y） */
 .link,
 .prose a {
@@ -151,15 +146,14 @@ table {
   }
 }
 
-/* home のセクション見出し（見た目は h1 と共通、右端に "all →"） */
+/* home のセクション見出し（h2 相当の大きさ、右端に "all →"） */
 .section-title {
-  display: grid;
-  grid-template-columns: 1fr auto;
+  display: flex;
+  justify-content: space-between;
   align-items: baseline;
-
-  &::after {
-    grid-column: 1 / -1;
-  }
+  font-size: 1.15rem;
+  line-height: 1.5;
+  margin: 2.5rem 0 0.75rem;
 
   & a {
     font-family: var(--font-mono);
@@ -176,6 +170,7 @@ table {
   border-top: 1px solid var(--line);
 
   & li {
+    position: relative;
     display: flex;
     align-items: baseline;
     gap: 1rem;
@@ -200,6 +195,13 @@ table {
   & .title {
     flex: 1;
     min-width: 0;
+
+    /* 行全体をクリック可能にする（hover の反応範囲と揃える） */
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+    }
   }
 
   & li:hover .title {
@@ -229,12 +231,6 @@ table {
   height: 0.5rem;
   border-radius: 50%;
   background: var(--c, var(--line));
-
-  /* note は色に加えて形（白抜き）でも post と区別する */
-  &.tag-note {
-    background: none;
-    box-shadow: inset 0 0 0 1.5px var(--c);
-  }
 }
 
 /* 頻出タグの色（.kind / .tags a 共通） */
@@ -243,7 +239,7 @@ table {
 }
 
 .tag-note {
-  --c: var(--violet);
+  --c: var(--green);
 }
 
 .tag-tool {

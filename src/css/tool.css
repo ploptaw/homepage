@@ -26,8 +26,9 @@
   font-size: 1rem;
 
   &:focus {
-    outline: none;
     border-color: var(--accent);
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
   }
 }
 
@@ -135,12 +136,18 @@ button {
 /* char-count */
 .count-stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.75rem;
   margin: 1rem 0 0;
+
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
 }
 
 .count-stat {
+  min-width: 0;
   padding: 0.6rem 0.8rem;
   background: var(--surface);
   border: 1px solid var(--line);
@@ -156,6 +163,7 @@ button {
     font-size: 1.4rem;
     font-weight: 700;
     font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
   }
 }
 

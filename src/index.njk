@@ -3,10 +3,7 @@ layout: base
 title: Home
 ---
 
-<p class="lead">
-  ツール・記事・メモを置いています。
-  <a href="/content/about/" class="link">about →</a>
-</p>
+<h1>Welcome</h1>
 
 <section>
   <h2 class="section-title">Articles <a href="/content/list/">all →</a></h2>
@@ -21,7 +18,9 @@ title: Home
     <li>
       <span class="kind tag-tool" aria-hidden="true"></span>
       <a class="title" href="{{ tool.url }}">{{ tool.data.title }}</a>
+      {%- if tool.data.description %}
       <span class="desc">{{ tool.data.description }}</span>
+      {%- endif %}
     </li>
     {%- endfor %}
   </ul>

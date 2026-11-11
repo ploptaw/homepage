@@ -6,8 +6,8 @@ title: About
 
 <div class="prose">
 
-# プロフィール
+# Profile
 
-## ploptaw
+## hi
 
 </div>
